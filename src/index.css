@@ -1,2 +1,9 @@
 @import "tailwindcss";
 @tailwind utilities;
+
+
+@layer base {
+  body {
+    @apply bg-black text-white; /* Sets background to black and text to white for contrast */
+  }
+}
