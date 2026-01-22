@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 
-const Login = () => {
+const Login = ({ handleLogin }) => {
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const submitHandler = (e) => {
     e.preventDefault();
+    
+
+    handleLogin(email, password);
+    
     console.log("Form submitted with:", { email, password });
 
     // Reset form
@@ -31,7 +36,6 @@ const Login = () => {
               Email Address
             </label>
             <div className="relative">
-              {/* Icon */}
               <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -64,7 +68,6 @@ const Login = () => {
               Password
             </label>
             <div className="relative">
-              {/* Lock Icon */}
               <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -88,7 +91,6 @@ const Login = () => {
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter password"
               />
-              {/* Toggle Password Visibility Button */}
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
