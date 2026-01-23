@@ -4,12 +4,7 @@ const employees = [
     "firstName": "Arjun",
     "email": "e1@e.com",
     "password": "123",
-    "taskCounts": {
-      "active": 2,
-      "newTask": 1,
-      "completed": 1,
-      "failed": 0
-    },
+    "taskCounts": { "active": 2, "newTask": 1, "completed": 1, "failed": 0 },
     "tasks": [
       {
         "active": true,
@@ -17,7 +12,7 @@ const employees = [
         "completed": false,
         "failed": false,
         "taskTitle": "UI Redesign",
-        "taskDescription": "Redesign the dashboard homepage using Tailwind CSS.",
+        "taskDescription": "Redesign the dashboard homepage.",
         "taskDate": "2024-02-20",
         "category": "Design"
       },
@@ -27,7 +22,7 @@ const employees = [
         "completed": true,
         "failed": false,
         "taskTitle": "Client Meeting",
-        "taskDescription": "Discuss project requirements with the client.",
+        "taskDescription": "Discuss project requirements.",
         "taskDate": "2024-02-18",
         "category": "Meeting"
       },
@@ -36,8 +31,8 @@ const employees = [
         "newTask": false,
         "completed": false,
         "failed": false,
-        "taskTitle": "Fix Navigation Bug",
-        "taskDescription": "Navbar not collapsing on mobile devices.",
+        "taskTitle": "Fix Navbar",
+        "taskDescription": "Navbar not collapsing on mobile.",
         "taskDate": "2024-02-22",
         "category": "Development"
       }
@@ -48,20 +43,15 @@ const employees = [
     "firstName": "Sneha",
     "email": "employee2@example.com",
     "password": "123",
-    "taskCounts": {
-      "active": 1,
-      "newTask": 0,
-      "completed": 1,
-      "failed": 1
-    },
+    "taskCounts": { "active": 1, "newTask": 0, "completed": 1, "failed": 0 },
     "tasks": [
       {
         "active": true,
         "newTask": false,
         "completed": false,
         "failed": false,
-        "taskTitle": "Database Optimization",
-        "taskDescription": "Optimize SQL queries for better performance.",
+        "taskTitle": "DB Optimization",
+        "taskDescription": "Optimize SQL queries.",
         "taskDate": "2024-02-19",
         "category": "Database"
       },
@@ -70,20 +60,10 @@ const employees = [
         "newTask": false,
         "completed": true,
         "failed": false,
-        "taskTitle": "Design System Update",
-        "taskDescription": "Update the color palette in the design system.",
+        "taskTitle": "Design System",
+        "taskDescription": "Update color palette.",
         "taskDate": "2024-02-15",
         "category": "Design"
-      },
-      {
-        "active": false,
-        "newTask": false,
-        "completed": false,
-        "failed": true,
-        "taskTitle": "API Integration",
-        "taskDescription": "Integrate the payment gateway API.",
-        "taskDate": "2024-02-10",
-        "category": "Backend"
       }
     ]
   },
@@ -92,20 +72,15 @@ const employees = [
     "firstName": "Ravi",
     "email": "employee3@example.com",
     "password": "123",
-    "taskCounts": {
-      "active": 2,
-      "newTask": 1,
-      "completed": 1,
-      "failed": 0
-    },
+    "taskCounts": { "active": 2, "newTask": 1, "completed": 1, "failed": 0 },
     "tasks": [
       {
         "active": true,
         "newTask": true,
         "completed": false,
         "failed": false,
-        "taskTitle": "Create User Onboarding",
-        "taskDescription": "Design the user onboarding flow screens.",
+        "taskTitle": "Onboarding Flow",
+        "taskDescription": "Design user onboarding screens.",
         "taskDate": "2024-02-25",
         "category": "UX Design"
       },
@@ -114,8 +89,8 @@ const employees = [
         "newTask": false,
         "completed": false,
         "failed": false,
-        "taskTitle": "Write Documentation",
-        "taskDescription": "Document the API endpoints for the new module.",
+        "taskTitle": "API Docs",
+        "taskDescription": "Document new API endpoints.",
         "taskDate": "2024-02-23",
         "category": "Documentation"
       },
@@ -125,7 +100,7 @@ const employees = [
         "completed": true,
         "failed": false,
         "taskTitle": "Code Review",
-        "taskDescription": "Review the pull requests for the authentication module.",
+        "taskDescription": "Review authentication PRs.",
         "taskDate": "2024-02-12",
         "category": "Development"
       }
@@ -136,40 +111,25 @@ const employees = [
     "firstName": "Priya",
     "email": "employee4@example.com",
     "password": "123",
-    "taskCounts": {
-      "active": 2,
-      "newTask": 1,
-      "completed": 0,
-      "failed": 1
-    },
+    "taskCounts": { "active": 2, "newTask": 1, "completed": 0, "failed": 0 },
     "tasks": [
       {
         "active": true,
         "newTask": true,
         "completed": false,
         "failed": false,
-        "taskTitle": "Social Media Assets",
-        "taskDescription": "Create banners for the upcoming marketing campaign.",
+        "taskTitle": "Social Assets",
+        "taskDescription": "Create marketing banners.",
         "taskDate": "2024-02-26",
         "category": "Marketing"
-      },
-      {
-        "active": false,
-        "newTask": false,
-        "completed": false,
-        "failed": true,
-        "taskTitle": "Server Migration",
-        "taskDescription": "Migrate the production server to AWS.",
-        "taskDate": "2024-02-05",
-        "category": "DevOps"
       },
       {
         "active": true,
         "newTask": false,
         "completed": false,
         "failed": false,
-        "taskTitle": "Footer Redesign",
-        "taskDescription": "Update the footer links and layout.",
+        "taskTitle": "Footer Update",
+        "taskDescription": "Update footer links.",
         "taskDate": "2024-02-21",
         "category": "Design"
       }
@@ -180,12 +140,7 @@ const employees = [
     "firstName": "Karan",
     "email": "employee5@example.com",
     "password": "123",
-    "taskCounts": {
-      "active": 2,
-      "newTask": 1,
-      "completed": 1,
-      "failed": 0
-    },
+    "taskCounts": { "active": 2, "newTask": 1, "completed": 1, "failed": 0 },
     "tasks": [
       {
         "active": true,
@@ -193,7 +148,7 @@ const employees = [
         "completed": false,
         "failed": false,
         "taskTitle": "Unit Testing",
-        "taskDescription": "Write unit tests for the user service.",
+        "taskDescription": "Write tests for user service.",
         "taskDate": "2024-02-27",
         "category": "QA"
       },
@@ -203,7 +158,7 @@ const employees = [
         "completed": false,
         "failed": false,
         "taskTitle": "Performance Audit",
-        "taskDescription": "Run Lighthouse performance checks on the homepage.",
+        "taskDescription": "Run Lighthouse checks.",
         "taskDate": "2024-02-24",
         "category": "Analysis"
       },
@@ -213,7 +168,7 @@ const employees = [
         "completed": true,
         "failed": false,
         "taskTitle": "Team Lunch",
-        "taskDescription": "Organize the monthly team lunch.",
+        "taskDescription": "Organize monthly lunch.",
         "taskDate": "2024-02-01",
         "category": "HR"
       }
@@ -224,14 +179,18 @@ const employees = [
 const admin = [
   {
     "id": 1,
-    "email": "admin@example.com",
+    "email": "admin@me.com", 
     "password": "123"
   }
 ];
 
 export const setLocalStorage = () => {
-    localStorage.setItem('employees', JSON.stringify(employees));
-    localStorage.setItem('admin', JSON.stringify(admin));
+    if (!localStorage.getItem('employees')) {
+        localStorage.setItem('employees', JSON.stringify(employees));
+    }
+    if (!localStorage.getItem('admin')) {
+        localStorage.setItem('admin', JSON.stringify(admin));
+    }
 }
 
 export const getLocalStorage = () => {
@@ -240,4 +199,3 @@ export const getLocalStorage = () => {
 
     return { employees, admin };
 }
-
