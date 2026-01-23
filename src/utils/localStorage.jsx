@@ -224,7 +224,8 @@ const employees = [
 const admin = [
   {
     "id": 1,
-    "email": "admin@example.com",
+    "firstName": "Ashesh",
+    "email": "admin@me.com",
     "password": "123"
   }
 ];
@@ -240,4 +241,3 @@ export const getLocalStorage = () => {
 
     return { employees, admin };
 }
-
