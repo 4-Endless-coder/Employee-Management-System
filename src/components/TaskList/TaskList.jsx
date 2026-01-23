@@ -1,6 +1,6 @@
 import React from "react";
 
-const TaskList = () => {
+const TaskList = ({data}) => {
   const tasks = [
     {
       priority: "Critical",
