@@ -22,6 +22,18 @@ const App = () => {
     }
   }, []);
 
+  // Update logged-in employee data when context changes
+  useEffect(() => {
+    if (user === 'employee' && authData && authData.employees && loggedInUserData) {
+      const updatedEmployee = authData.employees.find(
+        emp => emp.email === loggedInUserData.email
+      );
+      if (updatedEmployee) {
+        setLoggedInUserData(updatedEmployee);
+      }
+    }
+  }, [authData, user]);
+
   const handleLogin = (email, password) => {
     // Guard clause: wait for authData to load
     if (!authData) {

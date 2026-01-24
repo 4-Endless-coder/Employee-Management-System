@@ -13,8 +13,14 @@ const AuthProvider = ({ children }) => {
     setUserData({ employees, admin });
   }, []);
 
+  // Function to update employee data in real-time
+  const updateEmployeeData = (updatedEmployees) => {
+    const { admin } = getLocalStorage();
+    setUserData({ employees: updatedEmployees, admin });
+  };
+
   return (
-    <AuthContext.Provider value={userData}>
+    <AuthContext.Provider value={{ ...userData, updateEmployeeData }}>
       {children}
     </AuthContext.Provider>
   );
