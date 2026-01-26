@@ -30,18 +30,39 @@ const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  // Function to update employee data in real-time
+  // Function to update employee data in real-time (NO RELOAD!)
   const updateEmployeeData = (updatedEmployees) => {
     console.log("Updating employee data...");
     
     // Update localStorage first
     localStorage.setItem('employees', JSON.stringify(updatedEmployees));
     
-    // Then update context state
+    // Then update context state (triggers re-render)
     const { admin } = getLocalStorage();
     setUserData({ employees: updatedEmployees, admin });
     
-    console.log("Employee data updated successfully");
+    // Update logged in user if they're an employee
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    if (loggedInUser) {
+      try {
+        const parsed = JSON.parse(loggedInUser);
+        if (parsed.role === 'employee') {
+          const updatedUser = updatedEmployees.find(
+            emp => emp.email === parsed.data.email
+          );
+          if (updatedUser) {
+            localStorage.setItem('loggedInUser', JSON.stringify({
+              role: 'employee',
+              data: updatedUser
+            }));
+          }
+        }
+      } catch (error) {
+        console.error("Error updating logged in user:", error);
+      }
+    }
+    
+    console.log("Employee data updated successfully - UI will refresh automatically!");
   };
 
   return (

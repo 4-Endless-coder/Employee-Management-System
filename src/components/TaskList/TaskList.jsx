@@ -15,7 +15,7 @@ const TaskList = ({ data }) => {
 
   const tasks = data.tasks;
 
-  // Function to handle Accept Task
+  // Function to handle Accept Task (NO RELOAD!)
   const handleAcceptTask = (taskIndex) => {
     const employees = JSON.parse(localStorage.getItem("employees")) || [];
     
@@ -48,17 +48,12 @@ const TaskList = ({ data }) => {
     });
 
     localStorage.setItem("employees", JSON.stringify(updatedEmployees));
-    updateEmployeeData(updatedEmployees);
+    updateEmployeeData(updatedEmployees); // This triggers re-render!
     
-    // Update logged in user data
-    const updatedUser = updatedEmployees.find(emp => emp.email === data.email);
-    localStorage.setItem('loggedInUser', JSON.stringify({ 
-      role: 'employee', 
-      data: updatedUser 
-    }));
+    console.log("✅ Task accepted - UI updated without reload!");
   };
 
-  // Function to handle Complete Task
+  // Function to handle Complete Task (NO RELOAD!)
   const handleCompleteTask = (taskIndex) => {
     const employees = JSON.parse(localStorage.getItem("employees")) || [];
     
@@ -91,17 +86,12 @@ const TaskList = ({ data }) => {
     });
 
     localStorage.setItem("employees", JSON.stringify(updatedEmployees));
-    updateEmployeeData(updatedEmployees);
+    updateEmployeeData(updatedEmployees); // This triggers re-render!
     
-    // Update logged in user data
-    const updatedUser = updatedEmployees.find(emp => emp.email === data.email);
-    localStorage.setItem('loggedInUser', JSON.stringify({ 
-      role: 'employee', 
-      data: updatedUser 
-    }));
+    console.log("✅ Task completed - UI updated without reload!");
   };
 
-  // Function to handle Failed Task
+  // Function to handle Failed Task (NO RELOAD!)
   const handleFailTask = (taskIndex) => {
     const employees = JSON.parse(localStorage.getItem("employees")) || [];
     
@@ -134,14 +124,9 @@ const TaskList = ({ data }) => {
     });
 
     localStorage.setItem("employees", JSON.stringify(updatedEmployees));
-    updateEmployeeData(updatedEmployees);
+    updateEmployeeData(updatedEmployees); // This triggers re-render!
     
-    // Update logged in user data
-    const updatedUser = updatedEmployees.find(emp => emp.email === data.email);
-    localStorage.setItem('loggedInUser', JSON.stringify({ 
-      role: 'employee', 
-      data: updatedUser 
-    }));
+    console.log("✅ Task marked as failed - UI updated without reload!");
   };
 
   // Function to determine task styling based on status
