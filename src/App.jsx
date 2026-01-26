@@ -16,9 +16,16 @@ const App = () => {
     const loggedInUser = localStorage.getItem('loggedInUser');
     
     if (loggedInUser) {
-      const foundUser = JSON.parse(loggedInUser);
-      setUser(foundUser.role);
-      setLoggedInUserData(foundUser.data);
+      try {
+        const foundUser = JSON.parse(loggedInUser);
+        if (foundUser && foundUser.role && foundUser.data) {
+          setUser(foundUser.role);
+          setLoggedInUserData(foundUser.data);
+        }
+      } catch (error) {
+        console.error("Error parsing logged in user:", error);
+        localStorage.removeItem('loggedInUser');
+      }
     }
   }, []);
 
@@ -30,9 +37,14 @@ const App = () => {
       );
       if (updatedEmployee) {
         setLoggedInUserData(updatedEmployee);
+        // Update localStorage to keep it in sync
+        localStorage.setItem('loggedInUser', JSON.stringify({ 
+          role: 'employee', 
+          data: updatedEmployee 
+        }));
       }
     }
-  }, [authData, user]);
+  }, [authData, user, loggedInUserData?.email]);
 
   const handleLogin = (email, password) => {
     // Guard clause: wait for authData to load
@@ -43,11 +55,17 @@ const App = () => {
 
     const { admin, employees } = authData;
 
+    // Check if data is loaded
+    if (!admin || !employees) {
+      alert("System data not loaded. Please refresh the page.");
+      return;
+    }
+
     // 1. Find Admin
-    const adminUser = admin.find((a) => a.email == email && a.password == password);
+    const adminUser = admin.find((a) => a.email === email && a.password === password);
 
     // 2. Find Employee
-    const employeeUser = employees.find((e) => e.email == email && e.password == password);
+    const employeeUser = employees.find((e) => e.email === email && e.password === password);
 
     if (adminUser) {
       setUser("admin");
@@ -67,7 +85,11 @@ const App = () => {
   return (
     <>
       {!user ? <Login handleLogin={handleLogin} /> : ""}
-      {user == "admin" ? <AdminDashboard changeUser={setUser} /> : (user == 'employee' ? <EmployeeDashboard changeUser={setUser} data={loggedInUserData} /> : null) }
+      {user === "admin" ? (
+        <AdminDashboard changeUser={setUser} />
+      ) : user === 'employee' ? (
+        <EmployeeDashboard changeUser={setUser} data={loggedInUserData} />
+      ) : null}
     </>
   );
 };

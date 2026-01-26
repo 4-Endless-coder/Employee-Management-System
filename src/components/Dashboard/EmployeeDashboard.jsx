@@ -4,36 +4,49 @@ import TaskListNumber from '../../other/TaskListNumber'
 import TaskList from '../TaskList/TaskList'
 import { AuthContext } from '../../context/AuthProvider'
 
-const EmployeeDashboard = ({data}) => {
+const EmployeeDashboard = ({ changeUser }) => {
   const authData = useContext(AuthContext);
-  const [employeeData, setEmployeeData] = useState(data);
+  const [employeeData, setEmployeeData] = useState(null);
 
   useEffect(() => {
-    // Update employee data when context changes
-    if (authData && authData.employees) {
-      const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
-      if (loggedInUser && loggedInUser.data) {
-        // Find the updated employee data
-        const updatedEmployee = authData.employees.find(
-          emp => emp.email === loggedInUser.data.email
-        );
-        if (updatedEmployee) {
-          setEmployeeData(updatedEmployee);
-          // Update localStorage with latest data
-          localStorage.setItem('loggedInUser', JSON.stringify({ 
-            role: 'employee', 
-            data: updatedEmployee 
-          }));
-        }
+    // Get initial employee data from localStorage
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (loggedInUser && loggedInUser.data) {
+      setEmployeeData(loggedInUser.data);
+    }
+  }, []);
+
+  useEffect(() => {
+    // Update employee data when context changes (when tasks are updated)
+    if (authData && authData.employees && employeeData) {
+      const updatedEmployee = authData.employees.find(
+        emp => emp.email === employeeData.email
+      );
+      if (updatedEmployee) {
+        setEmployeeData(updatedEmployee);
+        // Also update localStorage to keep it in sync
+        localStorage.setItem('loggedInUser', JSON.stringify({ 
+          role: 'employee', 
+          data: updatedEmployee 
+        }));
       }
     }
-  }, [authData]);
+  }, [authData, employeeData?.email]);
+
+  // Show loading state while data is being fetched
+  if (!employeeData) {
+    return (
+      <div className='p-10 bg-[#1C1C1C] h-screen flex items-center justify-center'>
+        <p className="text-gray-400 text-xl">Loading your dashboard...</p>
+      </div>
+    );
+  }
 
   return (
     <div className='p-10 bg-[#1C1C1C] h-screen'>
-        <Header data={employeeData} />
-        <TaskListNumber data={employeeData} />
-        <TaskList data={employeeData} />
+      <Header changeUser={changeUser} data={employeeData} />
+      <TaskListNumber data={employeeData} />
+      <TaskList data={employeeData} />
     </div>
   )
 }
