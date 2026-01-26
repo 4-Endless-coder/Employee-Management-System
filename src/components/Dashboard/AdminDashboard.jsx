@@ -8,7 +8,7 @@ const AdminDashboard = ({ changeUser }) => {
   const authData = useContext(AuthContext);
 
   return (
-    <div className="h-screen w-full bg-[#1c1c1c] p-7">
+    <div className="h-screen w-full bg-[#1c1c1c] p-7 overflow-auto">
       <Header changeUser={changeUser} />
       <CreateTask />
       <AllTask data={authData} />

@@ -8,10 +8,13 @@ const CreateTask = () => {
   const [assignTo, setAssignTo] = useState("");
   const [category, setCategory] = useState("");
 
-  const { updateEmployeeData } = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
 
   const submitHandler = (e) => {
     e.preventDefault();
+
+    console.log("Creating task...");
+    console.log("Form data:", { taskTitle, taskDescription, taskDate, assignTo, category });
 
     // Create new task object
     const newTask = {
@@ -25,15 +28,28 @@ const CreateTask = () => {
       failed: false,
     };
 
+    console.log("New task object:", newTask);
+
     // Get employees from localStorage
-    const employees = JSON.parse(localStorage.getItem("employees")) || [];
+    const employees = JSON.parse(localStorage.getItem("employees"));
+    
+    if (!employees || employees.length === 0) {
+      alert("No employees found in the system!");
+      return;
+    }
+
+    console.log("Current employees:", employees);
 
     // Find the employee to assign task to
     let taskAssigned = false;
     const updatedEmployees = employees.map((employee) => {
-      if (employee.firstName.toLowerCase() === assignTo.toLowerCase() || 
-          employee.email.toLowerCase() === assignTo.toLowerCase()) {
+      const matchesName = employee.firstName.toLowerCase() === assignTo.toLowerCase();
+      const matchesEmail = employee.email.toLowerCase() === assignTo.toLowerCase();
+      
+      if (matchesName || matchesEmail) {
+        console.log("Found matching employee:", employee.firstName);
         taskAssigned = true;
+        
         // Add task to employee
         const updatedTasks = [...employee.tasks, newTask];
         
@@ -53,15 +69,22 @@ const CreateTask = () => {
     });
 
     if (!taskAssigned) {
-      alert("Employee not found! Please check the name or email.");
+      alert(`Employee "${assignTo}" not found! Please check the name or email.\n\nAvailable employees:\n${employees.map(e => `- ${e.firstName} (${e.email})`).join('\n')}`);
       return;
     }
+
+    console.log("Updated employees:", updatedEmployees);
 
     // Save back to localStorage
     localStorage.setItem("employees", JSON.stringify(updatedEmployees));
 
     // Update context to reflect changes in real-time
-    updateEmployeeData(updatedEmployees);
+    if (authContext && authContext.updateEmployeeData) {
+      authContext.updateEmployeeData(updatedEmployees);
+      console.log("Context updated successfully");
+    } else {
+      console.warn("AuthContext or updateEmployeeData not available");
+    }
 
     // Reset form
     setTaskTitle("");
@@ -105,7 +128,7 @@ const CreateTask = () => {
               onChange={(e) => setTaskDate(e.target.value)}
               type="date"
               required
-              onClick={(e) => e.target.showPicker()}
+              min={new Date().toISOString().split('T')[0]}
               className="w-full rounded-lg border border-gray-700 bg-[#2c2c2c]/50 px-4 py-3 text-sm text-white transition-all duration-300 outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50 [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-60 [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:hover:opacity-100"
             />
           </div>
@@ -123,11 +146,9 @@ const CreateTask = () => {
               required
               className="w-full rounded-lg border border-gray-700 bg-[#2c2c2c]/50 px-4 py-3 text-sm text-white transition-all duration-300 outline-none placeholder:text-gray-500 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50"
             />
-            {updateEmployeeData && (
-              <p className="mt-1 text-xs text-gray-500">
-                Available employees shown in AllTask section below
-              </p>
-            )}
+            <p className="mt-2 text-xs text-gray-500">
+              Examples: "Arjun" or "e1@e.com"
+            </p>
           </div>
 
           {/* Category */}

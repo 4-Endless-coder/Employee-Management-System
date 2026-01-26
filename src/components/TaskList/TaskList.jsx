@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../../context/AuthProvider";
 
 const TaskList = ({ data }) => {
+  const { updateEmployeeData } = useContext(AuthContext);
+
   // Guard clause: wait for data to load
   if (!data || !data.tasks) {
     return (
@@ -11,6 +14,120 @@ const TaskList = ({ data }) => {
   }
 
   const tasks = data.tasks;
+
+  // Function to handle Accept Task (NO RELOAD!)
+  const handleAcceptTask = (taskIndex) => {
+    const employees = JSON.parse(localStorage.getItem("employees")) || [];
+    
+    const updatedEmployees = employees.map((employee) => {
+      if (employee.email === data.email) {
+        const updatedTasks = employee.tasks.map((task, idx) => {
+          if (idx === taskIndex) {
+            return {
+              ...task,
+              active: true,
+              newTask: false,
+            };
+          }
+          return task;
+        });
+
+        const updatedTaskCounts = {
+          ...employee.taskCounts,
+          active: employee.taskCounts.active + 1,
+          newTask: employee.taskCounts.newTask - 1,
+        };
+
+        return {
+          ...employee,
+          tasks: updatedTasks,
+          taskCounts: updatedTaskCounts,
+        };
+      }
+      return employee;
+    });
+
+    localStorage.setItem("employees", JSON.stringify(updatedEmployees));
+    updateEmployeeData(updatedEmployees); // This triggers re-render!
+    
+    console.log("✅ Task accepted - UI updated without reload!");
+  };
+
+  // Function to handle Complete Task (NO RELOAD!)
+  const handleCompleteTask = (taskIndex) => {
+    const employees = JSON.parse(localStorage.getItem("employees")) || [];
+    
+    const updatedEmployees = employees.map((employee) => {
+      if (employee.email === data.email) {
+        const updatedTasks = employee.tasks.map((task, idx) => {
+          if (idx === taskIndex) {
+            return {
+              ...task,
+              active: false,
+              completed: true,
+            };
+          }
+          return task;
+        });
+
+        const updatedTaskCounts = {
+          ...employee.taskCounts,
+          active: employee.taskCounts.active - 1,
+          completed: employee.taskCounts.completed + 1,
+        };
+
+        return {
+          ...employee,
+          tasks: updatedTasks,
+          taskCounts: updatedTaskCounts,
+        };
+      }
+      return employee;
+    });
+
+    localStorage.setItem("employees", JSON.stringify(updatedEmployees));
+    updateEmployeeData(updatedEmployees); // This triggers re-render!
+    
+    console.log("✅ Task completed - UI updated without reload!");
+  };
+
+  // Function to handle Failed Task (NO RELOAD!)
+  const handleFailTask = (taskIndex) => {
+    const employees = JSON.parse(localStorage.getItem("employees")) || [];
+    
+    const updatedEmployees = employees.map((employee) => {
+      if (employee.email === data.email) {
+        const updatedTasks = employee.tasks.map((task, idx) => {
+          if (idx === taskIndex) {
+            return {
+              ...task,
+              active: false,
+              failed: true,
+            };
+          }
+          return task;
+        });
+
+        const updatedTaskCounts = {
+          ...employee.taskCounts,
+          active: employee.taskCounts.active - 1,
+          failed: employee.taskCounts.failed + 1,
+        };
+
+        return {
+          ...employee,
+          tasks: updatedTasks,
+          taskCounts: updatedTaskCounts,
+        };
+      }
+      return employee;
+    });
+
+    localStorage.setItem("employees", JSON.stringify(updatedEmployees));
+    updateEmployeeData(updatedEmployees); // This triggers re-render!
+    
+    console.log("✅ Task marked as failed - UI updated without reload!");
+  };
 
   // Function to determine task styling based on status
   const getTaskStyle = (task) => {
@@ -106,12 +223,35 @@ const TaskList = ({ data }) => {
                 </div>
                 
                 <div className="flex items-center justify-between gap-2">
-                  {!task.completed && !task.failed && (
-                    <button className="flex-1 rounded-lg bg-white/20 px-4 py-2 text-xs font-semibold text-white backdrop-blur-md transition-colors hover:bg-white/30">
-                      {task.active ? "Complete" : "Accept"}
+                  {/* New Task - Show Accept Button */}
+                  {task.newTask && !task.active && !task.completed && !task.failed && (
+                    <button 
+                      onClick={() => handleAcceptTask(idx)}
+                      className="flex-1 rounded-lg bg-white/20 px-4 py-2 text-xs font-semibold text-white backdrop-blur-md transition-all duration-300 hover:bg-white/30 hover:scale-105 active:scale-95"
+                    >
+                      Accept Task
                     </button>
                   )}
+
+                  {/* Active Task - Show Complete and Fail Buttons */}
+                  {task.active && !task.completed && !task.failed && (
+                    <>
+                      <button 
+                        onClick={() => handleCompleteTask(idx)}
+                        className="flex-1 rounded-lg bg-green-500/30 px-4 py-2 text-xs font-semibold text-white backdrop-blur-md transition-all duration-300 hover:bg-green-500/50 hover:scale-105 active:scale-95"
+                      >
+                        Complete
+                      </button>
+                      <button 
+                        onClick={() => handleFailTask(idx)}
+                        className="flex-1 rounded-lg bg-red-500/30 px-4 py-2 text-xs font-semibold text-white backdrop-blur-md transition-all duration-300 hover:bg-red-500/50 hover:scale-105 active:scale-95"
+                      >
+                        Mark Failed
+                      </button>
+                    </>
+                  )}
                   
+                  {/* Completed Task - Show Status */}
                   {task.completed && (
                     <div className="flex-1 flex items-center justify-center gap-2 text-white">
                       <svg
@@ -130,6 +270,7 @@ const TaskList = ({ data }) => {
                     </div>
                   )}
 
+                  {/* Failed Task - Show Status */}
                   {task.failed && (
                     <div className="flex-1 flex items-center justify-center gap-2 text-white">
                       <svg
@@ -148,12 +289,12 @@ const TaskList = ({ data }) => {
                     </div>
                   )}
 
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 text-black transition-colors group-hover:bg-white">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 text-black transition-all duration-300 hover:bg-white hover:scale-110">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
                       fill="currentColor"
-                      className="h-4 w-4 text-transparent transition-colors group-hover:text-black"
+                      className="h-4 w-4 text-transparent transition-colors duration-300 group-hover:text-black"
                     >
                       <path
                         fillRule="evenodd"
