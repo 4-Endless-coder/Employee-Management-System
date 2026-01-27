@@ -19,15 +19,18 @@ const EmployeeDashboard = ({ changeUser, data }) => {
     // Update employee data when context changes (real-time updates!)
     if (authData && authData.employees && employeeData) {
       const updatedEmployee = authData.employees.find(
-        emp => emp.email === employeeData.email
+        (emp) => emp.email === employeeData.email,
       );
       if (updatedEmployee) {
         setEmployeeData(updatedEmployee);
         // Also update localStorage to keep it in sync
-        localStorage.setItem('loggedInUser', JSON.stringify({ 
-          role: 'employee', 
-          data: updatedEmployee 
-        }));
+        localStorage.setItem(
+          'loggedInUser',
+          JSON.stringify({
+            role: 'employee',
+            data: updatedEmployee,
+          }),
+        );
       }
     }
   }, [authData?.employees, employeeData?.email]);
@@ -35,20 +38,37 @@ const EmployeeDashboard = ({ changeUser, data }) => {
   // Show loading state while data is being fetched
   if (!employeeData) {
     return (
-      <div className='p-10 bg-[#1C1C1C] h-screen flex items-center justify-center'>
+      <div className="flex h-screen w-full items-center justify-center bg-[#020617]">
         <div className="text-center">
-          <div className="mb-4 h-12 w-12 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent mx-auto"></div>
-          <p className="text-gray-400 text-xl">Loading your dashboard...</p>
+          <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent" />
+          <p className="text-xl text-gray-400">Loading your workspace...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className='p-10 bg-[#1C1C1C] h-screen overflow-auto'>
-      <Header changeUser={changeUser} data={employeeData} />
-      <TaskListNumber data={employeeData} />
-      <TaskList data={employeeData} />
+    <div className="relative min-h-screen w-full overflow-auto bg-[#020617]">
+      {/* Atmospheric glows (pure CSS – no re-renders) */}
+      <div className="pointer-events-none fixed inset-0 -z-10">
+        <div className="absolute -top-32 -left-24 h-80 w-80 rounded-full bg-sky-500/25 blur-3xl md:h-[22rem] md:w-[22rem]" />
+        <div className="absolute bottom-[-6rem] right-[-4rem] h-96 w-96 rounded-full bg-violet-500/25 blur-[90px] md:h-[26rem] md:w-[26rem]" />
+      </div>
+
+      {/* Main content */}
+      <div className="relative z-10 px-4 py-6 sm:px-6 md:px-8 lg:px-10 lg:py-8 space-y-8">
+        <Header changeUser={changeUser} data={employeeData} />
+
+        {/* Bento grid: vitals + scroller */}
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:items-start">
+          <div className="lg:col-span-5 xl:col-span-4">
+            <TaskListNumber data={employeeData} />
+          </div>
+          <div className="lg:col-span-7 xl:col-span-8">
+            <TaskList data={employeeData} />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

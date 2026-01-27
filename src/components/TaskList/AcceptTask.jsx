@@ -2,7 +2,7 @@ import React from "react";
 
 const AcceptTask = ({ data }) => {
   return (
-    <div className="group relative flex h-full w-full min-w-70 max-w-85 shrink-0 snap-center flex-col justify-between overflow-hidden rounded-3xl bg-linear-to-br from-violet-500 via-purple-500 to-fuchsia-600 p-6 shadow-2xl shadow-purple-500/30 transition-all duration-500 hover:-translate-y-3 hover:shadow-purple-500/50 cursor-pointer sm:w-[320px]">
+    <div className="group relative flex h-full w-full min-w-70 max-w-85 shrink-0 snap-center flex-col justify-between overflow-hidden rounded-3xl bg-linear-to-br from-violet-500 via-purple-500 to-fuchsia-600 p-6 shadow-[0_0_28px_rgba(251,191,36,0.45)] transition-all duration-500 hover:-translate-y-3 hover:shadow-[0_0_36px_rgba(251,191,36,0.7)] cursor-pointer sm:w-[320px]">
       {/* Animated Background Gradients */}
       <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-white/10 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
       <div className="pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full bg-fuchsia-400/20 blur-3xl transition-transform duration-700 group-hover:scale-150" />
@@ -11,9 +11,10 @@ const AcceptTask = ({ data }) => {
       {/* Header */}
       <div className="relative z-10 flex items-start justify-between gap-3">
         <div className="group/badge inline-flex items-center gap-2 overflow-hidden rounded-full border border-white/30 bg-white/20 px-3 py-1.5 backdrop-blur-xl transition-all duration-300 hover:bg-white/30">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75"></span>
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-white"></span>
+          {/* Bionic Heartbeat */}
+          <span className="relative flex h-2.5 w-2.5">
+            <span className="absolute inline-flex h-full w-full animate-[ping_1.5s_ease-out_infinite] rounded-full bg-amber-300/70"></span>
+            <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-amber-200 shadow-[0_0_14px_rgba(251,191,36,0.9)]"></span>
           </span>
           <span className="text-xs font-bold uppercase tracking-wider text-white drop-shadow-sm">Active</span>
         </div>
