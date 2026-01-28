@@ -98,7 +98,7 @@ const CreateTask = () => {
     }, 2000);
   };
 
-  // Input field component with active-glow
+  // Input field component with active-glow and better label visibility
   const InputField = ({ 
     label, 
     value, 
@@ -118,9 +118,10 @@ const CreateTask = () => {
       <div className="relative">
         <label 
           htmlFor={inputId}
-          className="mb-2 block cursor-pointer text-[10px] font-semibold tracking-[0.2em] text-white/50 uppercase sm:text-xs"
+          className="mb-2.5 block cursor-pointer text-sm font-bold tracking-wide text-white/90 sm:text-base"
         >
           {label}
+          {required && <span className="ml-1 text-emerald-400">*</span>}
         </label>
         
         <div className="relative">
@@ -146,7 +147,25 @@ const CreateTask = () => {
               required={required}
               rows={rows || 6}
               placeholder={placeholder}
-              className="relative w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/30 backdrop-blur-sm transition-all duration-300 outline-none focus:border-emerald-500/50 focus:bg-white/10"
+              className="relative w-full resize-none rounded-xl border border-white/20 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/50 backdrop-blur-sm transition-all duration-300 outline-none focus:border-emerald-500/50 focus:bg-white/10 hover:border-white/30"
+              {...props}
+            />
+          ) : type === "date" ? (
+            <input
+              id={inputId}
+              value={value}
+              onChange={onChange}
+              onFocus={() => setFocusedField(fieldName)}
+              onBlur={() => setFocusedField(null)}
+              type={type}
+              required={required}
+              min={min}
+              placeholder={placeholder}
+              onClick={(e) => {
+                // Make the entire input clickable to open date picker
+                e.currentTarget.showPicker?.();
+              }}
+              className="relative w-full rounded-xl border border-white/20 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/50 backdrop-blur-sm transition-all duration-300 outline-none focus:border-emerald-500/50 focus:bg-white/10 hover:border-white/30 cursor-pointer [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-70 [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:hover:opacity-100"
               {...props}
             />
           ) : (
@@ -160,7 +179,7 @@ const CreateTask = () => {
               required={required}
               min={min}
               placeholder={placeholder}
-              className="relative w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/30 backdrop-blur-sm transition-all duration-300 outline-none focus:border-emerald-500/50 focus:bg-white/10 [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-60 [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:hover:opacity-100"
+              className="relative w-full rounded-xl border border-white/20 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/50 backdrop-blur-sm transition-all duration-300 outline-none focus:border-emerald-500/50 focus:bg-white/10 hover:border-white/30 [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-70 [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:hover:opacity-100"
               {...props}
             />
           )}
@@ -209,7 +228,7 @@ const CreateTask = () => {
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3, duration: 0.5 }}
-              className="mt-1 text-sm text-white/50"
+              className="mt-1 text-sm text-white/70"
             >
               Deploy new mission directives
             </motion.p>
@@ -240,17 +259,19 @@ const CreateTask = () => {
                 min={new Date().toISOString().split('T')[0]}
               />
 
-              <InputField
-                label="Assign To"
-                value={assignTo}
-                onChange={(e) => setAssignTo(e.target.value)}
-                placeholder="Employee name or email"
-                fieldName="assignTo"
-                required
-              />
-              <p className="mt-1 text-xs text-white/40">
-                Examples: "Arjun" or "e1@e.com"
-              </p>
+              <div>
+                <InputField
+                  label="Assign To"
+                  value={assignTo}
+                  onChange={(e) => setAssignTo(e.target.value)}
+                  placeholder="Employee name or email"
+                  fieldName="assignTo"
+                  required
+                />
+                <p className="mt-2 text-xs text-white/60 italic">
+                  Examples: "Arjun" or "e1@e.com"
+                </p>
+              </div>
 
               <InputField
                 label="Category"
