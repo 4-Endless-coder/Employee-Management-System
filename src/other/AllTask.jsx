@@ -81,15 +81,25 @@ const AllTask = ({ data }) => {
       rose: "from-rose-500/20 to-rose-600/10 text-rose-400 border-rose-500/30",
     };
 
+    // Shorter labels for better fit
+    const shortLabel = {
+      "New": "New",
+      "Active": "Active",
+      "Completed": "Done",
+      "Failed": "Failed"
+    }[config.label] || config.label;
+
     return (
       <motion.div
-        className={`flex items-center gap-1.5 rounded-lg border bg-gradient-to-br px-2.5 py-1.5 backdrop-blur-sm min-w-0 ${colorClasses[config.color]}`}
+        className={`flex flex-col items-center justify-center gap-1.5 rounded-lg border bg-gradient-to-br px-2.5 py-2 backdrop-blur-sm min-w-[4.5rem] ${colorClasses[config.color]}`}
         whileHover={{ scale: 1.05 }}
         transition={{ type: "spring", stiffness: 300 }}
       >
-        <Icon className="h-3.5 w-3.5 flex-shrink-0" />
-        <span className="text-xs font-semibold whitespace-nowrap">{config.label}</span>
-        <span className="text-xs font-bold whitespace-nowrap">{config.count}</span>
+        <div className="flex items-center gap-1.5">
+          <Icon className="h-3.5 w-3.5 flex-shrink-0" />
+          <span className="text-lg font-bold tabular-nums">{config.count}</span>
+        </div>
+        <span className="text-[10px] font-semibold uppercase tracking-wider opacity-90">{shortLabel}</span>
       </motion.div>
     );
   };
@@ -147,7 +157,7 @@ const AllTask = ({ data }) => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.5 }}
-          className="relative z-10 mb-6 grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3"
+          className="relative z-10 mb-6 grid grid-cols-4 gap-3"
         >
           <StatusBadge config={getStatusConfig(totalStats.newTask, "newTask")} />
           <StatusBadge config={getStatusConfig(totalStats.active, "active")} />
@@ -212,7 +222,7 @@ const AllTask = ({ data }) => {
                     </div>
 
                     {/* Right: Task Counts */}
-                    <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+                    <div className="flex items-center gap-2 flex-shrink-0">
                       {Object.entries(employee.taskCounts).map(([key, count]) => {
                         const config = getStatusConfig(count, key);
                         const Icon = config.icon;
@@ -226,12 +236,12 @@ const AllTask = ({ data }) => {
                         return (
                           <motion.div
                             key={key}
-                            className="flex flex-col items-center gap-1 min-w-[2.5rem]"
+                            className="flex flex-col items-center justify-center gap-1 min-w-[2.5rem] max-w-[3rem]"
                             whileHover={{ scale: 1.1 }}
                             transition={{ type: "spring", stiffness: 400 }}
                           >
                             <Icon className={`h-4 w-4 ${colorMap[key]} flex-shrink-0`} />
-                            <span className={`text-sm font-bold ${colorMap[key]} whitespace-nowrap`}>
+                            <span className={`text-sm font-bold ${colorMap[key]} tabular-nums`}>
                               {count}
                             </span>
                           </motion.div>
@@ -240,7 +250,7 @@ const AllTask = ({ data }) => {
                     </div>
                   </div>
 
-                  {/* Expanded Details */}
+                  {/* Expanded Details - Task List with Edit/Delete ONLY on tasks */}
                   <AnimatePresence>
                     {isExpanded && employee.tasks && employee.tasks.length > 0 && (
                       <motion.div
@@ -256,30 +266,43 @@ const AllTask = ({ data }) => {
                             initial={{ opacity: 0, x: -10 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: taskIndex * 0.05 }}
-                            className="rounded-lg border border-white/5 bg-white/5 p-3 backdrop-blur-sm"
+                            className="group/task rounded-lg border border-white/5 bg-white/5 p-3 backdrop-blur-sm hover:bg-white/10 transition-colors"
                           >
-                            <div className="flex items-start justify-between">
-                              <div className="flex-1">
-                                <h4 className="font-semibold text-white">{task.taskTitle}</h4>
-                                <p className="mt-1 text-xs text-white/60">{task.taskDescription}</p>
+                            <div className="flex items-start justify-between gap-3">
+                              <div className="flex-1 min-w-0">
+                                <h4 className="font-semibold text-white truncate">{task.taskTitle}</h4>
+                                <p className="mt-1 text-xs text-white/60 line-clamp-2">{task.taskDescription}</p>
                                 <div className="mt-2 flex items-center gap-3 text-xs text-white/50">
-                                  <span>{task.category}</span>
+                                  <span className="truncate">{task.category}</span>
                                   <span>•</span>
-                                  <span>{task.taskDate}</span>
+                                  <span className="whitespace-nowrap">{task.taskDate}</span>
                                 </div>
                               </div>
-                              <div className="flex items-center gap-2">
+                              {/* Edit/Delete icons ONLY on individual tasks */}
+                              <div className="flex items-center gap-2 flex-shrink-0">
                                 <motion.button
                                   whileHover={{ scale: 1.1 }}
                                   whileTap={{ scale: 0.9 }}
-                                  className="rounded-lg bg-white/10 p-2 text-white/70 hover:bg-white/20 hover:text-white"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    // Handle edit task logic here
+                                    console.log('Edit task:', task.taskTitle);
+                                  }}
+                                  className="rounded-lg bg-white/10 p-2 text-white/70 hover:bg-white/20 hover:text-white transition-all"
+                                  title="Edit Task"
                                 >
                                   <Edit2 className="h-4 w-4" />
                                 </motion.button>
                                 <motion.button
                                   whileHover={{ scale: 1.1 }}
                                   whileTap={{ scale: 0.9 }}
-                                  className="rounded-lg bg-rose-500/20 p-2 text-rose-400 hover:bg-rose-500/30"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    // Handle delete task logic here
+                                    console.log('Delete task:', task.taskTitle);
+                                  }}
+                                  className="rounded-lg bg-rose-500/20 p-2 text-rose-400 hover:bg-rose-500/30 transition-all"
+                                  title="Delete Task"
                                 >
                                   <Trash2 className="h-4 w-4" />
                                 </motion.button>
@@ -287,35 +310,6 @@ const AllTask = ({ data }) => {
                             </div>
                           </motion.div>
                         ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-
-                  {/* Action Icons - Only show when expanded */}
-                  <AnimatePresence>
-                    {isExpanded && (
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.8 }}
-                        transition={{ duration: 0.2 }}
-                        className="absolute right-4 top-4 flex items-center gap-2 z-20"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <motion.button
-                          whileHover={{ scale: 1.1, y: -2 }}
-                          whileTap={{ scale: 0.9 }}
-                          className="rounded-lg bg-white/10 p-2 text-white/70 backdrop-blur-sm hover:bg-white/20 hover:text-white"
-                        >
-                          <Edit2 className="h-4 w-4" />
-                        </motion.button>
-                        <motion.button
-                          whileHover={{ scale: 1.1, y: -2 }}
-                          whileTap={{ scale: 0.9 }}
-                          className="rounded-lg bg-rose-500/20 p-2 text-rose-400 backdrop-blur-sm hover:bg-rose-500/30"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </motion.button>
                       </motion.div>
                     )}
                   </AnimatePresence>
