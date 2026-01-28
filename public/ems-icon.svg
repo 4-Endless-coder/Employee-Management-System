@@ -1,0 +1,63 @@
+<svg
+  width="128"
+  height="128"
+  viewBox="0 0 128 128"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <defs>
+    <linearGradient id="ems-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="50%" stop-color="#020617" />
+      <stop offset="100%" stop-color="#14b8a6" />
+    </linearGradient>
+    <linearGradient id="ems-accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#22d3ee" />
+      <stop offset="50%" stop-color="#a855f7" />
+      <stop offset="100%" stop-color="#22c55e" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background circle -->
+  <circle
+    cx="64"
+    cy="64"
+    r="60"
+    fill="url(#ems-bg)"
+  />
+
+  <!-- Inner ring -->
+  <circle
+    cx="64"
+    cy="64"
+    r="46"
+    fill="none"
+    stroke="rgba(15,23,42,0.85)"
+    stroke-width="6"
+  />
+
+  <!-- Accent arc -->
+  <path
+    d="M 28 72 A 36 36 0 0 1 100 56"
+    fill="none"
+    stroke="url(#ems-accent)"
+    stroke-width="6"
+    stroke-linecap="round"
+  />
+
+  <!-- EMS monogram -->
+  <g
+    fill="none"
+    stroke="#e5e7eb"
+    stroke-width="5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <!-- E -->
+    <path d="M40 48 H56 M40 64 H52 M40 80 H56" />
+    <!-- M -->
+    <path d="M62 80 V48 L70 60 L78 48 V80" />
+    <!-- S -->
+    <path d="M88 52 C88 48 84 46 80 46 C76 46 72 48 72 52 C72 56 76 58 80 60 C84 62 88 64 88 68 C88 72 84 74 80 74 C76 74 72 72 72 68" />
+  </g>
+</svg>
+
