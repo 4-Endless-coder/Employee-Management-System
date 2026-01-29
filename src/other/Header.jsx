@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LogOut, Clock, Calendar, Heart } from 'lucide-react';
+import { LogOut, Clock, Calendar, Shield, User } from 'lucide-react';
 
 const Header = (props) => {
   const [username, setUsername] = useState('');
@@ -108,6 +108,29 @@ const Header = (props) => {
 
   const avatarInitial = username ? username.charAt(0).toUpperCase() : 'U';
 
+  // Role-based styling
+  const roleConfig = {
+    Admin: {
+      icon: Shield,
+      color: 'from-purple-500/10 via-purple-500/5 to-transparent',
+      borderColor: 'border-purple-500/30',
+      textColor: 'text-purple-300',
+      bgColor: 'bg-purple-400',
+      glowColor: 'shadow-purple-400/50',
+    },
+    Employee: {
+      icon: User,
+      color: 'from-blue-500/10 via-blue-500/5 to-transparent',
+      borderColor: 'border-blue-500/30',
+      textColor: 'text-blue-300',
+      bgColor: 'bg-blue-400',
+      glowColor: 'shadow-blue-400/50',
+    },
+  };
+
+  const config = roleConfig[userRole] || roleConfig.Employee;
+  const RoleIcon = config.icon;
+
   return (
     <motion.div
       className="relative flex w-full items-center justify-between gap-4 rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 via-white/[0.03] to-transparent p-4 shadow-2xl backdrop-blur-xl transition-all duration-300 sm:p-5 md:p-6"
@@ -142,9 +165,9 @@ const Header = (props) => {
             </span>
           </div>
           
-          {/* Pulsing glow indicator */}
+          {/* Status indicator */}
           <motion.div
-            className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-emerald-400 shadow-lg shadow-emerald-400/50 ring-2 ring-[#1c1c1c] sm:h-3.5 sm:w-3.5"
+            className={`absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full ${config.bgColor} shadow-lg ${config.glowColor} ring-2 ring-[#1c1c1c] sm:h-3.5 sm:w-3.5`}
             animate={{
               scale: [1, 1.2, 1],
               opacity: [1, 0.8, 1],
@@ -168,7 +191,7 @@ const Header = (props) => {
             Welcome Back
           </motion.h1>
 
-          {/* Username & Status Row */}
+          {/* Username & Role Badge Row */}
           <div className="flex flex-wrap items-center gap-2 sm:gap-3">
             <motion.h2
               className="text-xl font-bold leading-none text-white drop-shadow-sm sm:text-2xl md:text-3xl"
@@ -178,33 +201,22 @@ const Header = (props) => {
               {username || 'User'}
             </motion.h2>
 
-            {/* Live Session Pill with Heartbeat */}
+            {/* Role Badge - Shows Admin or Employee */}
             <motion.div
-              className="group relative flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-gradient-to-r from-emerald-500/10 via-emerald-500/5 to-transparent px-2.5 py-1 backdrop-blur-sm sm:px-3 sm:py-1.5"
+              className={`group relative flex items-center gap-1.5 rounded-full border ${config.borderColor} bg-gradient-to-r ${config.color} px-2.5 py-1 backdrop-blur-sm sm:px-3 sm:py-1.5`}
               variants={itemVariants}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              {/* Pulsing heart icon */}
-              <motion.div
-                animate={{
-                  scale: [1, 1.15, 1],
-                }}
-                transition={{
-                  duration: 1.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              >
-                <Heart className="h-2.5 w-2.5 fill-emerald-400 text-emerald-400 sm:h-3 sm:w-3" />
-              </motion.div>
+              {/* Role icon */}
+              <RoleIcon className={`h-3 w-3 ${config.textColor} sm:h-3.5 sm:w-3.5`} />
               
-              <span className="text-[10px] font-semibold text-emerald-300 sm:text-xs">
-                Live Session
+              <span className={`text-[10px] font-semibold ${config.textColor} sm:text-xs uppercase tracking-wider`}>
+                {userRole}
               </span>
               
-              {/* Subtle glow effect */}
-              <div className="absolute inset-0 rounded-full bg-emerald-500/20 blur-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+              {/* Subtle glow effect on hover */}
+              <div className={`absolute inset-0 rounded-full opacity-0 blur-sm transition-opacity duration-300 group-hover:opacity-100 ${config.color.replace('/5', '/20')}`} />
             </motion.div>
           </div>
         </div>
@@ -247,7 +259,7 @@ const Header = (props) => {
         >
           {/* Background gradient on hover */}
           <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-crimson-600/0 via-crimson-600/0 to-crimson-600/0"
+            className="absolute inset-0 bg-gradient-to-r from-red-600/0 via-red-600/0 to-red-600/0"
             animate={{
               background: isHoveringLogout
                 ? 'linear-gradient(to right, rgba(220, 38, 38, 0.9), rgba(185, 28, 28, 0.9))'
