@@ -196,7 +196,7 @@ const CreateTask = () => {
       className="relative"
     >
       {/* Neumorphic Glassmorphism Card */}
-      <div className="relative rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.08] via-white/[0.03] to-transparent p-6 shadow-[0_8px_32px_0_rgba(0,0,0,0.37),inset_0_1px_0_0_rgba(255,255,255,0.1)] backdrop-blur-xl sm:p-8 md:p-10">
+      <div className="relative rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.08] via-white/[0.03] to-transparent p-5 shadow-[0_8px_32px_0_rgba(0,0,0,0.37),inset_0_1px_0_0_rgba(255,255,255,0.1)] backdrop-blur-xl sm:p-6 md:p-8">
         {/* Inner shadow for depth */}
         <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-b from-transparent via-transparent to-black/20" />
         

@@ -41,7 +41,7 @@ const AllTask = ({ data }) => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.08] via-white/[0.03] to-transparent p-8 shadow-[0_8px_32px_0_rgba(0,0,0,0.37),inset_0_1px_0_0_rgba(255,255,255,0.1)] backdrop-blur-xl"
+        className="relative rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.08] via-white/[0.03] to-transparent p-5 shadow-[0_8px_32px_0_rgba(0,0,0,0.37),inset_0_1px_0_0_rgba(255,255,255,0.1)] backdrop-blur-xl sm:p-6 md:p-8"
       >
         <div className="flex h-full min-h-[400px] items-center justify-center">
           <p className="text-white/50">Loading employee data...</p>
@@ -112,7 +112,7 @@ const AllTask = ({ data }) => {
       className="relative h-full"
     >
       {/* Neumorphic Glassmorphism Card */}
-      <div className="relative h-full rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.08] via-white/[0.03] to-transparent p-6 shadow-[0_8px_32px_0_rgba(0,0,0,0.37),inset_0_1px_0_0_rgba(255,255,255,0.1)] backdrop-blur-xl sm:p-8">
+      <div className="relative h-full rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.08] via-white/[0.03] to-transparent p-5 shadow-[0_8px_32px_0_rgba(0,0,0,0.37),inset_0_1px_0_0_rgba(255,255,255,0.1)] backdrop-blur-xl sm:p-6 md:p-8">
         {/* Inner shadow for depth */}
         <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-b from-transparent via-transparent to-black/20" />
         
