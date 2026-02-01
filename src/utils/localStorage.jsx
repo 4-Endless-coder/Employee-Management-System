@@ -93,7 +93,7 @@ const employees = [
     "email": "employee3@example.com",
     "password": "123",
     "taskCounts": {
-      "active": 2,
+      "active": 1, // FIXED: Was 2, but actually has 1 active task
       "newTask": 1,
       "completed": 1,
       "failed": 0
@@ -181,7 +181,7 @@ const employees = [
     "email": "employee5@example.com",
     "password": "123",
     "taskCounts": {
-      "active": 2,
+      "active": 1, // FIXED: Was 2, but actually has 1 active task
       "newTask": 1,
       "completed": 1,
       "failed": 0
@@ -231,8 +231,13 @@ const admin = [
 ];
 
 export const setLocalStorage = () => {
-    localStorage.setItem('employees', JSON.stringify(employees));
-    localStorage.setItem('admin', JSON.stringify(admin));
+    // BUG FIX: Only set data if it doesn't exist to prevent overwriting user changes on refresh
+    if (!localStorage.getItem('employees')) {
+        localStorage.setItem('employees', JSON.stringify(employees));
+    }
+    if (!localStorage.getItem('admin')) {
+        localStorage.setItem('admin', JSON.stringify(admin));
+    }
 }
 
 export const getLocalStorage = () => {

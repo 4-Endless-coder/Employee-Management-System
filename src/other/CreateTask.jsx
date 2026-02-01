@@ -127,7 +127,7 @@ const CreateTask = () => {
         <div className="relative">
           {/* Active glow border */}
           <motion.div
-            className="absolute -inset-[1px] rounded-xl pointer-events-none"
+            className="absolute -inset-px rounded-xl pointer-events-none"
             animate={{
               opacity: isFocused ? 1 : 0,
               boxShadow: isFocused 
@@ -196,12 +196,12 @@ const CreateTask = () => {
       className="relative"
     >
       {/* Neumorphic Glassmorphism Card */}
-      <div className="relative rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.08] via-white/[0.03] to-transparent p-5 shadow-[0_8px_32px_0_rgba(0,0,0,0.37),inset_0_1px_0_0_rgba(255,255,255,0.1)] backdrop-blur-xl sm:p-6 md:p-8">
+      <div className="relative rounded-2xl border border-white/10 bg-linear-to-br from-white/8 via-white/3 to-transparent p-5 shadow-[0_8px_32px_0_rgba(0,0,0,0.37),inset_0_1px_0_0_rgba(255,255,255,0.1)] backdrop-blur-xl sm:p-6 md:p-8">
         {/* Inner shadow for depth */}
-        <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-b from-transparent via-transparent to-black/20" />
+        <div className="pointer-events-none absolute inset-0 rounded-2xl bg-linear-to-b from-transparent via-transparent to-black/20" />
         
         {/* Subtle glow effect */}
-        <div className="pointer-events-none absolute -inset-[1px] rounded-2xl bg-gradient-to-br from-emerald-500/10 via-transparent to-transparent opacity-50 blur-xl" />
+        <div className="pointer-events-none absolute -inset-px rounded-2xl bg-linear-to-br from-emerald-500/10 via-transparent to-transparent opacity-50 blur-xl" />
 
         {/* Header */}
         <div className="relative z-10 mb-8 flex items-center gap-3">
@@ -209,7 +209,7 @@ const CreateTask = () => {
             initial={{ scale: 0, rotate: -180 }}
             animate={{ scale: 1, rotate: 0 }}
             transition={{ duration: 0.6, type: "spring", stiffness: 200 }}
-            className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/10 backdrop-blur-sm"
+            className="flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-emerald-500/20 to-emerald-600/10 backdrop-blur-sm"
           >
             <Sparkles className="h-6 w-6 text-emerald-400" />
           </motion.div>
@@ -308,7 +308,7 @@ const CreateTask = () => {
             <motion.button
               type="submit"
               disabled={isSubmitting}
-              className="group relative flex items-center gap-3 overflow-hidden rounded-xl bg-gradient-to-r from-emerald-500 via-emerald-600 to-emerald-500 px-8 py-4 text-sm font-bold tracking-wide text-white uppercase shadow-lg shadow-emerald-500/30 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="group relative flex items-center gap-3 overflow-hidden rounded-xl bg-linear-to-r from-emerald-500 via-emerald-600 to-emerald-500 px-8 py-4 text-sm font-bold tracking-wide text-white uppercase shadow-lg shadow-emerald-500/30 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               animate={{
@@ -329,7 +329,7 @@ const CreateTask = () => {
             >
               {/* Gradient shift animation */}
               <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-emerald-400 via-emerald-500 to-emerald-600"
+                className="absolute inset-0 bg-linear-to-r from-emerald-400 via-emerald-500 to-emerald-600"
                 animate={{
                   x: isSubmitting ? ["-100%", "100%"] : "-100%",
                 }}
@@ -384,7 +384,7 @@ const CreateTask = () => {
 
               {/* Shine effect */}
               <motion.div
-                className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/30 to-transparent"
                 animate={{
                   translateX: ["-100%", "200%"],
                 }}
