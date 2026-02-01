@@ -286,7 +286,7 @@ const Login = ({ handleLogin }) => {
   };
 
   return (
-    <div className="relative flex h-screen w-screen items-center justify-center overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-black">
+    <div className="relative flex h-screen w-screen items-center justify-center overflow-hidden bg-linear-to-br from-gray-900 via-gray-800 to-black">
       {/* --- SMART NOTIFICATIONS (Hover/Click to Reveal) --- */}
       <div className="absolute top-4 left-4 z-20 flex max-w-[90%] flex-col gap-3">
         {/* 1. Admin Login (Emerald) */}
